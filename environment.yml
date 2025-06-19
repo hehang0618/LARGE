@@ -1,0 +1,17 @@
+name: large
+channels:
+ - cctbx202211
+ - conda-forge
+ - pytorch
+ - nvidia
+ - bioconda
+dependencies:
+ - fair-esm=1.0.2
+ - biopython=1.82
+ - pytorch=2.1.2
+ - transformers=4.22.2
+ - scikit-learn=1.1.2
+ - h5py=3.7.0
+ - python=3.10
+ - huggingface_hub=0.24.5
+ - tqdm=4.66.5

@@ -1,0 +1,13 @@
+code,name
+0,antibiotic target replacement
+1,antibiotic inactivation
+2,antibiotic target alteration
+3,antibiotic target protection
+4,antibiotic efflux
+5,Others
+6,reduced permeability to antibiotic
+7,resistance by host-dependent nutrient acquisition
+8,antibiotic efflux;reduced permeability to antibiotic
+9,antibiotic efflux;antibiotic target alteration
+10,antibiotic target alteration;antibiotic target replacement
+11,UnARG

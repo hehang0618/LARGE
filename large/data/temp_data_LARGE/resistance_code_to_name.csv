@@ -1,0 +1,28 @@
+code,name
+0,trimethoprim
+1,beta-lactam
+2,macrolide-lincosamide-streptogramin
+3,aminoglycoside
+4,quinolone
+5,multidrug
+6,rifamycin
+7,glycopeptide
+8,tetracycline
+9,chloramphenicol
+10,Others
+11,nucleoside
+12,phosphonic acid
+13,elfamycin
+14,fusidane
+15,diaminopyrimidine
+16,pleuromutilin
+17,bicyclomycin-like
+18,Polypeptide
+19,disinfecting agents and antiseptics
+20,mupirocin-like
+21,nitroimidazole
+22,sulfonamide
+23,puromycin
+24,polymyxin
+25,antibacterial free fatty acids
+26,UnARG

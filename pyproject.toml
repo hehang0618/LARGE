@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "large"
+version = "0.1.0"
+description = ""
+authors = ["Hang He <hehang@westlake.edu.cn>"]
+readme = "README.md"
+packages = [{include = "large_v1"}]
+include = ["large_v1/data/**/*.csv"]
+
+[tool.poetry.dependencies]
+fairscale = "0.4.10"
+bio = "1.6.0"
+pyrodigal = "3.5.1"
+
+[tool.poetry.scripts]
+LARGE = "large_v1.LARGE:main"
+model_download = "large_v1.model_download:main"
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

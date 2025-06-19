@@ -1,0 +1,423 @@
+code,name
+0,Trimethoprim resistant dihydrofolate reductase dfr
+1,CARB beta-lactamase
+2,Erm 23S ribosomal RNA methyltransferase
+3,LRA beta-lactamase
+4,OXA beta-lactamase
+5,IMP beta-lactamase
+6,VEB beta-lactamase
+7,16S rRNA methyltransferase
+8,SME beta-lactamase
+9,AAC(3)
+10,MOX beta-lactamase
+11,Quinolone resistance protein (qnr)
+12,GIM beta-lactamase
+13,TLA beta-lactamase
+14,AAC(6')
+15,IND beta-lactamase
+16,Cfr 23S ribosomal RNA methyltransferase
+17,Miscellaneous ABC-F subfamily ATP-binding cassette ribosomal protection proteins
+18,Rifampin ADP-ribosyltransferase (Arr)
+19,Rifampin glycosyltransferase
+20,CMY beta-lactamase
+21,CphA beta-lactamase
+22,Non-erm 23S ribosomal RNA methyltransferase (G748)
+23,Van ligase;glycopeptide resistance gene cluster
+24,MFS antibiotic efflux pump
+25,Glycopeptide resistance gene cluster;vanR
+26,OCH beta-lactamase
+27,CTX-M beta-lactamase
+28,AAC(3)-Ib-AAC(6')-Ib
+29,Undecaprenyl pyrophosphate related proteins
+30,LEN beta-lactamase
+31,ACT beta-lactamase
+32,CfxA beta-lactamase
+33,RND antibiotic efflux pump
+34,AadA
+35,JOHN beta-lactamase
+36,FEZ beta-lactamase
+37,OXY beta-lactamase
+38,SMR antibiotic efflux pump
+39,Lincosamide nucleotidyltransferase (LNU)
+40,DHA beta-lactamase
+41,OKP beta-lactamase
+42,BlaF family beta-lactamase
+43,Macrolide phosphotransferase (MPH)
+44,ABC antibiotic efflux pump
+45,TUS beta-lactamase
+46,PER beta-lactamase
+47,IMI beta-lactamase
+48,Chloramphenicol acetyltransferase (CAT)
+49,Streptothricin acetyltransferase (SAT)
+50,Glycopeptide resistance gene cluster;vanXY
+51,Glycopeptide resistance gene cluster;vanV
+52,APH(3')
+53,Chloramphenicol phosphotransferase
+54,AIM beta-lactamase
+55,AAC(2')
+56,Rifampin monooxygenase
+57,Methicillin resistant PBP2
+58,SMB beta-lactamase
+59,GOB beta-lactamase
+60,Glycopeptide resistance gene cluster;vanH
+61,Tetracycline inactivation enzyme
+62,Streptogramin vat acetyltransferase
+63,APH(6)
+64,LCR beta-lactamase
+65,CarA
+66,Rifampin phosphotransferase
+67,RCP beta-lactamase
+68,CGB beta-lactamase
+69,Glycopeptide resistance gene cluster;vanS
+70,BEL beta-lactamase
+71,Vga-type ABC-F protein
+72,APH(9)
+73,ANT(6)
+74,CAU beta-lactamase
+75,EBR beta-lactamase
+76,AER beta-lactamase
+77,Lsa-type ABC-F protein
+78,fosC phosphotransferase family
+79,MFS antibiotic efflux pump;RND antibiotic efflux pump
+80,ANT(4')
+81,Macrolide esterase
+82,Tetracycline-resistant ribosomal protection protein
+83,SIM beta-lactamase
+84,Sed beta-lactamase
+85,MATE transporter
+86,Fosfomycin thiol transferase
+87,CfiA beta-lactamase
+88,THIN-B beta-lactamase
+89,VIM beta-lactamase
+90,L1 family beta-lactamase
+91,Glycopeptide resistance gene cluster;vanX
+92,MIR beta-lactamase
+93,Glycopeptide resistance gene cluster;vanT
+94,APH(4)
+95,AQU beta-lactamase
+96,DIM beta-lactamase
+97,Ole glycosyltransferase
+98,Fom phosphotransferase family
+99,APH(3'')
+100,Glycopeptide resistance gene cluster;vanY
+101,TlrC
+102,Msr-type ABC-F protein
+103,FosC phosphotransferase family
+104,BlaZ beta-lactamase
+105,NmcA beta-lactamase
+106,GimA family macrolide glycosyltransferase
+107,BJP beta-lactamase
+108,VCC beta-lactamase
+109,subclass B3 PEDO beta-lactamase
+110,subclass B1 PEDO beta-lactamase
+111,ESP beta-lactamase
+112,MSI beta-lactamase
+113,MSI-OXA family beta-lactamase
+114,SPG beta-lactamase
+115,FONA beta-lactamase
+116,Target protecting FusB-type protein conferring resistance to Fusidic acid
+117,sal-type ABC-F protein
+118,Defensin resistant mprF
+119,SPM beta-lactamase
+120,FRI beta-lactamase
+121,ADC beta-lactamase
+122,FIM beta-lactamase
+123,FPH beta-lactamase
+124,Llm 23S ribosomal RNA methyltransferase
+125,Bah amidohydrolase
+126,Cpa acetyltransferase
+127,Streptogramin vgb lyase
+128,MCR phosphoethanolamine transferase
+129,Mgt macrolide glycotransferase
+130,Bcr1
+131,Edeine acetyltransferase
+132,Antibiotic-resistant murA transferase
+133,ARL Beta-lactamase
+134,BCL Beta-lactamase
+135,TMB beta-lactamase
+136,General Bacterial Porin with reduced permeability to beta-lactams
+137,BES Beta-lactamase
+138,BRO beta-lactamase
+139,APH(2'')
+140,Subclass B1 Vibrio cholerae varG beta-lactamase
+141,AmpC-type beta-lactamase
+142,BUT beta-lactamase
+143,ACI beta-lactamase
+144,RSA beta-lactamase
+145,HERA beta-lactamase
+146,TRU beta-lactamase
+147,BlaB beta-lactamase
+148,Icr-Mc
+149,BIC Beta-lactamase
+150,CBP beta-lactamase
+151,CGA beta-lactamase
+152,BKC Beta-lactamase
+153,CIA beta-lactamase
+154,AST Beta-lactamase
+155,CKO beta-lactamase
+156,CMH beta-lactamase
+157,NDM beta-lactamase
+158,DES beta-lactamase
+159,CAM beta-lactamase
+160,Icr-Mo
+161,PNGM beta-lactamase
+162,IDC beta-lactamase
+163,LMB beta-lactamase
+164,YRC Beta-lactamase
+165,PDC beta-lactamase
+166,ANT(3'')
+167,BlaS
+168,AAK beta-lactamase
+169,AFM beta-lactamase
+170,ALG11 beta-lactamase
+171,ALG6 beta-lactamases
+172,ALI beta-lactamase
+173,ANA beta-lactamase
+174,BSU beta-lactamase
+175,CAR beta-lactamase
+176,CMA beta-lactamase
+177,CRD3 beta-lactamase
+178,CRH beta-lactamase
+179,CRP beta-lactamase
+180,CSP beta-lactamase
+181,DHT2 beta-lactamase
+182,EAM beta-lactamase
+183,ECV beta-lactamase
+184,EFM beta-lactamase
+185,ELM beta-lactamase
+186,GES beta-lactamase
+187,GMB beta-lactamase
+188,GRD23 beta-lactamase
+189,GRD33 beta-lactamase
+190,KLUC beta-lactamase
+191,KPC beta-lactamase
+192,LRG beta-lactamase
+193,LUS beta-lactamase
+194,LUT beta-lactamase
+195,MOC beta-lactamase
+196,MYO beta-lactamase
+197,MYX beta-lactamase
+198,OHIO beta-lactamase
+199,ORN beta-lactamase
+200,PFM beta-lactamase
+201,PLA beta-lactamase
+202,PLN beta-lactamase
+203,POM beta-lactamase
+204,PST beta-lactamase
+205,PSV beta-lactamase
+206,RAHN beta-lactamase
+207,RSA2 beta-lactamase
+208,RSD2 beta-lactamase
+209,RUB beta-lactamase
+210,SFC beta-lactamase
+211,SGM beta-lactamase
+212,SHN beta-lactamase
+213,SPN79 beta-lactamase
+214,SPR beta-lactamase
+215,SPS beta-lactamase
+216,TTU beta-lactamase
+217,VHH beta-lactamase
+218,VHW beta-lactamase
+219,YEM beta-lactamase
+220,ZOG beta-lactamase
+221,SHD beta-lactamase
+222,R39 beta-lactamase
+223,Glycopeptide resistance gene cluster;vanW
+224,Glycopeptide resistance gene cluster;vanZ
+225,KHM beta-lactamase
+226,Antibiotic-resistant isoleucyl-tRNA synthetase (ileS)
+227,Rm3 family beta-lactamase
+228,HMB beta-lactamase
+229,Glycopeptide resistance gene cluster;vanU
+230,Nitroimidazole reductase
+231,VAM beta-lactamase
+232,PRC beta-lactamase
+233,Class A Bacillus cereus Bc beta-lactamase
+234,Subclass B1 Bacteroides xylanisolvens crx beta-lactamase
+235,ROB beta-lactamase
+236,Class A Mycobacterium abscessus beta-lactamase
+237,Class A Mycobacterium tuberculosis bla beta-lactamase
+238,PAM beta-lactamase
+239,KBL beta-lactamase
+240,Helicase-like RNA polymerase protection protein
+241,PJM beta-lactamase
+242,AAC(6')-30-AAC(6')-Ib'
+243,ANT3II_ANT6II
+244,ECF transporter S component
+245,ABC antibiotic efflux pump;MFS antibiotic efflux pump;RND antibiotic efflux pump
+246,Class C beta-lactamase
+247,Metallo beta-lactamase
+248,Multidrug_ABC_transporter
+249,Class A beta-lactamase
+250,TetR
+251,TetV
+252,MefA
+253,TetA
+254,EmrB-QacA family major facilitator transporter
+255,AcrA
+256,Transcriptional regulatory protein CpxR cpxR
+257,Multidrug_transporter
+258,Pbp1a
+259,TetP
+260,Truncated putative response regulator ArlR
+261,Kasugamycin resistance protein ksgA
+262,Bicyclomycin-multidrug_efflux_protein_bcr
+263,TcmA
+264,EmrE
+265,Pmr phosphoethanolamine transferase
+266,Bleomycin resistant protein
+267,Sulfonamide resistant sul
+268,MdtL
+269,TetU
+270,TetC
+271,DNA-binding_protein_H-NS
+272,AadD
+273,Viomycin phosphotransferase
+274,Tet34
+275,Puromycin resistance protein
+276,ANT(3'')-Ih-AAC(6')-IId
+277,PenA
+278,AcrB
+279,Major_facilitator_superfamily_transporter
+280,Non-erm 23S ribosomal RNA methyltransferase (A1067)
+281,Pbp2x
+282,TetX
+283,TetE
+284,Pbp1b
+285,RpsD_(ramA_or_sud2)
+286,TetB
+287,Class D beta-lactamase
+288,Tetracycline_resistance_protein
+289,AadK
+290,EmrD
+291,FloR
+292,BlaI
+293,Class B beta-lactamase
+294,ADP-ribosylating transferase_arr
+295,Two-component system_response regulator EvgA
+296,LmrA
+297,SHV beta-lactamase
+298,Chloramphenicol exporter
+299,SdeY
+300,Pse1
+301,AadE
+302,BpeF
+303,OprC
+304,TetG
+305,TetQ
+306,TetW
+307,TetK
+308,Bcr
+309,Ble
+310,Mdr
+311,Tunicamycin resistance protein
+312,Cml_e1
+313,Cml_e3
+314,ANT(2'')
+315,NorM
+316,PAC beta-lactamase
+317,Pbp2
+318,Pbp2b
+319,Rif
+320,Tet33
+321,Tet37
+322,Tet40
+323,TetL
+324,TetM
+325,TetO
+326,APH33Ib
+327,EC beta-lactamase
+328,BL2a_1
+329,BL2a_III
+330,PC beta-lactamase
+331,TEM beta-lactamase
+332,Y56 beta-lactamase
+333,BL3_l
+334,ACC beta-lactamase
+335,APH(7'')
+336,General Bacterial Porin with reduced permeability to beta-lactams;RND antibiotic efflux pump
+337,KdpDE
+338,Capreomycin phosphotransferase
+339,ANT(9)
+340,Alm glycyltransferase;polymyxin resistance operon
+341,SHW beta-lactamase
+342,RbpA bacterial RNA polymerase-binding protein
+343,Class A Bacillus anthracis Bla beta-lactamase
+344,CepA beta-lactamase
+345,General Bacterial Porin with reduced permeability to beta-lactams;resistance-nodulation-cell division (RND) antibiotic efflux pump
+346,FTU beta-lactamase
+347,SFH beta-lactamase
+348,LAP beta-lactamase
+349,VMB beta-lactamase
+350,GPC beta-lactamase
+351,FIA beta-lactamase
+352,PAU beta-lactamase
+353,STA beta-lactamase
+354,Streptomycin resistance protein
+355,cAMP-regulatory protein
+356,Bacterial regulatory protein LuxR
+357,Aad(9)
+358,SM beta-lactamase
+359,General Bacterial Porin with reduced permeability to peptide antibiotics
+360,Rifamycin-resistant beta-subunit of RNA polymerase (rpoB)
+361,Apm acetyltransferase
+362,Cob(I)alamin adenolsyltransferase
+363,EptA
+364,Outer Membrane Porin (Opr);RND antibiotic efflux pump
+365,AbaQ
+366,Alm glycyl carrier protein;polymyxin resistance operon
+367,AcrF
+368,Lntrinsic peptide antibiotic resistant Lps
+369,Tet32
+370,Lipid A acyltransferase;polymyxin resistance operon
+371,Cystathionine beta-lyase patB
+372,vanJ membrane protein
+373,CDD beta-lactamase
+374,TER beta-lactamase
+375,ABC antibiotic efflux pump;MFS antibiotic efflux pump
+376,AbaF
+377,FmtC
+378,BPU Beta-lactamase
+379,CPS beta-lactamase
+380,Lipid A phosphatase
+381,GIL beta-lactamase
+382,AbeS
+383,EmrK
+384,DNA-binding transcriptional regulator gadX
+385,TetD
+386,BAT Beta-lactamase
+387,FOX beta-lactamase
+388,FAR beta-lactamase
+389,Rifampin resistance protein
+390,Aad(6)
+391,CME beta-lactamase
+392,Fusidic acid inactivation enzyme
+393,AAC(6')-AAC(6')-Ib-cr
+394,MUS beta-lactamase
+395,AXC beta-lactamase
+396,CVI beta-lactamase
+397,Subclass B1 Bacillus cereus Bc beta-lactamase
+398,AadS
+399,Tet38
+400,APH(3''')
+401,ORR beta-lactamase
+402,CSA beta-lactamase
+403,LHK beta-lactamase
+404,TetT
+405,ERP beta-lactamase
+406,pmr phosphoethanolamine transferase
+407,CblA beta-lactamase
+408,SFO beta-lactamase
+409,Bifunctional aminoglycoside N-acetyltransferase and aminoglycoside phosphotransferase
+410,Chloramphenicol and florfenicol resistance gene
+411,TetH
+412,TetJ
+413,Tet
+414,SCO beta-lactamase
+415,ECM beta-lactamase
+416,AadB
+417,TetS
+418,PME beta-lactamase
+419,SRT beta-lactamase
+420,EVM beta-lactamase
+421,UnARG
