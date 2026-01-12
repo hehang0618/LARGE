@@ -142,7 +142,7 @@ This script will:
 
 If you use LARGE in published research, please cite:
 
-[citation]
+[Not now, maybe soon? I don't know.]
 
 ## **License**
 
