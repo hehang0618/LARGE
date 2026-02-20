@@ -5,6 +5,7 @@ channels:
  - pytorch
  - nvidia
  - bioconda
+ - defaults
 dependencies:
  - fair-esm=1.0.2
  - biopython=1.82
