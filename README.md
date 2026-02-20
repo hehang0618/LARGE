@@ -27,13 +27,13 @@ You must have the **`GPUs`** to install and use this software. We recommend that
 1. Clone the repository:
     
     ```bash
-    git clone https://github.com/hehang0618/LARGE_v1.0.git
+    git clone https://github.com/hehang0618/LARGE
     ```
     
 2. Create a conda envirment by using the environment.yml
 
     ```bash
-    cd LARGE_v1.0
+    cd LARGE
     conda env create -f environment.yml
     ```
    Or you can use mamba to create the environment(recommended)
