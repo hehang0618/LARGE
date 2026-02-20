@@ -38,7 +38,7 @@ You must have the **`GPUs`** to install and use this software. We recommend that
     ```
    Or you can use mamba to create the environment(recommended)
     ```bash
-    cd LARGE_v1.0
+    cd LARGE
     mamba env create -f environment.yml
     ```
 
