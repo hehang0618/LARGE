@@ -7,6 +7,7 @@ import shutil
 import pyrodigal
 import Bio.SeqIO
 import importlib.util
+import large
 
 from large.readfasta import process_fasta
 from large.plm_embed_esm1b_LARGE import run_esm_embedding
@@ -17,7 +18,7 @@ from large.LARGE_predict import *
 
 def parse_arguments():
     spec = importlib.util.find_spec('large')
-    script_dir = os.path.dirname(spec.origin) if spec else os.getcwd()
+    script_dir = list(large.__path__)[0]
     default_output = "./output/"
     default_model_dir = script_dir + "/model/"
     
