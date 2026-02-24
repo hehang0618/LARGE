@@ -28,7 +28,7 @@ def parse_arguments():
     group.add_argument("-n", "--nucleotide", metavar="filename", help="Input nucleotide sequence file in FASTA format (will be translated to protein)")
     parser.add_argument("-c", "--cpu", type=int, default=10, help="Number of cpus for sequence loading (default: %(default)s)")
     parser.add_argument("-t", "--topn", type=int, default=1, help="Extract the top n prediction results (default: %(default)s)")
-    parser.add_argument("-g", "--gpu", type=int, default=1, help="Which gpu for LARGE (default: %(default)s)")
+    parser.add_argument("-g", "--gpu", type=int, default=0, help="Which gpu for LARGE (default: %(default)s)")
     parser.add_argument("-l", "--length", type=int, default=5000, help="Cut sequence longer than how many amino acids. (default: %(default)s)")
     parser.add_argument("-o", "--output_dir", default=default_output, help="Output dir (default: %(default)s)")
     parser.add_argument("-m", "--model_dir", default=default_model_dir, help="Downloaded models dir. If you don't set the download path manually, Don't set it.(default: %(default)s)")
