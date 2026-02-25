@@ -21,7 +21,6 @@ def find_free_port():
     return port
 
 class TruncatedFastaBatchedDataset(FastaBatchedDataset):
-    """扩展FastaBatchedDataset类以支持序列截断"""
     def __init__(self, sequence_labels, sequence_strs, max_length=100000):
         super().__init__(sequence_labels, sequence_strs)
         self.max_length = max_length
@@ -46,7 +45,7 @@ def run_esm_embedding(fasta_file, output_path, model_path, regression_path, num_
     port = find_free_port()
     os.environ["CUDA_VISIBLE_DEVICES"] = str(num_gpus)
     toks_per_batch = 12290
-    # 使用修改后的数据集类，设置最大序列长度为10000
+    # max length 10000
     dataset = TruncatedFastaBatchedDataset.from_file(fasta_file, max_length=max_length)
     
     if model=="slow":
@@ -90,7 +89,7 @@ def run_esm_embedding(fasta_file, output_path, model_path, regression_path, num_
     with torch.no_grad():
         for batch_idx, (labels, strs, toks) in tqdm(enumerate(data_loader), total=len(data_loader)):
             toks = toks.cuda()
-            # 这里保持12288的截断作为额外的安全措施
+            # keep 12288
             toks = toks[:, :12288]
             results = model(toks, repr_layers=[33], return_contacts=False)
             token_representations = results["representations"][33]

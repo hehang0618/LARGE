@@ -42,7 +42,7 @@ def infer(data_path, model,output_path, device, id_dict,num_workers):
         for batch in tqdm(loader, total=len(loader)):            
             inputs_embeds= batch['embeds'].type(torch.FloatTensor)        
             attention_mask = batch['attention_mask'].type(torch.FloatTensor)
-            mask = torch.zeros(attention_mask.shape) #nothing is masked
+            mask = torch.zeros(attention_mask.shape)
             masked_tokens = (mask==1) & (attention_mask != 0)
             masked_tokens = torch.unsqueeze(masked_tokens, -1)
             masked_tokens = masked_tokens.to(device)
