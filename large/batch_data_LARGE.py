@@ -5,6 +5,7 @@ import pickle as pk
 import importlib.util
 from sklearn.decomposition import PCA
 warnings.filterwarnings('ignore')
+import large
 
 def batch_data(emb_f, output_dir):
     # 步骤1: 收集所有蛋白质ID和嵌入向量
@@ -20,7 +21,7 @@ def batch_data(emb_f, output_dir):
     
     # 加载归一化参数
     spec = importlib.util.find_spec('large')
-    script_dir = os.path.dirname(spec.origin) if spec else os.getcwd()
+    script_dir = list(large.__path__)[0]
     embs_mean_file = os.path.join(script_dir, "data/temp_data_LARGE/embs_mean.pkl")
     embs_std_file = os.path.join(script_dir, "data/temp_data_LARGE/embs_std.pkl")
     with open(embs_mean_file, "rb") as f:

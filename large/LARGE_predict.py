@@ -9,7 +9,11 @@ from torch.utils.data import Dataset, DataLoader
 import pickle as pk
 from scipy.special import softmax
 import pkg_resources
+import large
 
+script_dir = list(large.__path__)[0]
+datas_dir = script_dir + "/data/temp_data_LARGE/"
+    
 torch.manual_seed(12345)
 class MulticlassClassification(nn.Module):
     def __init__(self, num_feature, num_class):
@@ -95,7 +99,8 @@ def train(data_path, type, file_name, model_path,X_test,y_test,topn=1):
             topn = num_classes
         
         code_to_name = {}
-        code_to_name_path = pkg_resources.resource_filename('large', f'data/temp_data_LARGE/{code_to_name_file}')
+        # code_to_name_path = pkg_resources.resource_filename('large', f'data/temp_data_LARGE/{code_to_name_file}')
+        code_to_name_path = datas_dir + code_to_name_file
         with open(code_to_name_path, 'r') as csvfile:
             df = pd.read_csv(csvfile)
             for _, row in df.iterrows():

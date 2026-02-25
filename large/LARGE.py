@@ -17,7 +17,6 @@ from large.LARGE_predict import *
 
 
 def parse_arguments():
-    spec = importlib.util.find_spec('large')
     script_dir = list(large.__path__)[0]
     default_output = "./output/"
     default_model_dir = script_dir + "/model/"
@@ -29,13 +28,13 @@ def parse_arguments():
     parser.add_argument("-c", "--cpu", type=int, default=10, help="Number of cpus for sequence loading (default: %(default)s)")
     parser.add_argument("-t", "--topn", type=int, default=1, help="Extract the top n prediction results (default: %(default)s)")
     parser.add_argument("-g", "--gpu", type=int, default=0, help="Which gpu for LARGE (default: %(default)s)")
-    parser.add_argument("-l", "--length", type=int, default=5000, help="Cut sequence longer than how many amino acids. (default: %(default)s)")
+    parser.add_argument("-l", "--length", type=int, default=5000, help="Cut sequence longer than how many amino acids. Too long may cause memory error. (default: %(default)s)")
     parser.add_argument("-o", "--output_dir", default=default_output, help="Output dir (default: %(default)s)")
     parser.add_argument("-m", "--model_dir", default=default_model_dir, help="Downloaded models dir. If you don't set the download path manually, Don't set it.(default: %(default)s)")
     parser.add_argument("--probability", default=0.5, help="Set the cutoff probability(default: %(default)s)")
     parser.add_argument("--clean", action="store_true", help="If delete the intermediate file")
     parser.add_argument("--cate", help="Training model")
-    parser.add_argument("--model", default="fast" ,help="Fast or slow model")    
+    parser.add_argument("--model", default="fast" ,help="Fast or slow model. If choose slow, each sequence will get it's embs alone but will expend more time")    
     args = parser.parse_args()
     return args
     
@@ -108,7 +107,7 @@ def main():
             model_path=os.path.join(args.model_dir, "esm2_t33_650M_UR50D.pt")
             sequence_representations = run_esm_embedding(
                 fasta_file=rep_file, output_path=pklfile, num_workers=args.cpu, num_gpus=args.gpu,
-                regression_path=regression_path, model_path=model_path, max_length=5000,model=args.model)
+                regression_path=regression_path, model_path=model_path, max_length=args.length,model=args.model)
             batch_data(sequence_representations,  batch_dir)
             mark_step_finished(1, args.output_dir)
         except subprocess.CalledProcessError as e:
