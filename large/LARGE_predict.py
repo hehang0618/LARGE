@@ -9,11 +9,7 @@ from torch.utils.data import Dataset, DataLoader
 import pickle as pk
 from scipy.special import softmax
 import pkg_resources
-import large
 
-script_dir = list(large.__path__)[0]
-datas_dir = script_dir + "/data/temp_data_LARGE/"
-    
 torch.manual_seed(12345)
 class MulticlassClassification(nn.Module):
     def __init__(self, num_feature, num_class):
@@ -84,97 +80,116 @@ def save_data(results_dir, type, file_name):
     return  X_test, y_test
 
 
-def train(data_path, type, file_name, model_path,X_test,y_test,topn=1):
+def predict_categories(data_path, type, file_name, model_path, X_test, y_test, topn, categories, probability=0.5):
+    """
+    对指定的 categories 列表进行预测，每个类别从 model_path 下读取对应的权重和映射文件。
+    文件命名规范：{category}_model_weights.pkl 和 {category}_code_to_name.csv
+    """
     NUM_FEATURES = 2560
-    categories = [
-        ('GeneFamily', 422, 'genefamily_model_weights.pth', 'genefamily_code_to_name.csv'), 
-        ('Resistance', 27, 'resistance_model_weights.pth', 'resistance_code_to_name.csv'), 
-        ('Mechanism', 12, 'mechanism_model_weights.pth', 'mechanism_code_to_name.csv')
-    ]
-    
-    for cate, num_classes, model_weights, code_to_name_file in categories:
-        print(f"Generating results for {cate}")
+
+    for category in categories:
+        print(f"Generating results for {category}")
+
+        # 1. 读取 code_to_name 映射，并获取类别数量
+        code_to_name_path = os.path.join(model_path, f'{category}_code_to_name.csv')
+        if not os.path.exists(code_to_name_path):
+            print(f"Warning: Mapping file {code_to_name_path} not found. Skipping category {category}.")
+            continue
         
-        if topn > num_classes:
-            topn = num_classes
-        
-        code_to_name = {}
-        # code_to_name_path = pkg_resources.resource_filename('large', f'data/temp_data_LARGE/{code_to_name_file}')
-        code_to_name_path = datas_dir + code_to_name_file
-        with open(code_to_name_path, 'r') as csvfile:
-            df = pd.read_csv(csvfile)
-            for _, row in df.iterrows():
-                key = int(row[0])
-                value = row[1]
-                code_to_name[key] = value
-        
-        # Output file path
-        plm_arg_output_file = f'{data_path}/../{file_name}_{cate}_predicted_results.csv'
-        
-        # Prepare dataset and loader
-        file_nameset = ClassifierDataset(torch.from_numpy(X_test).float(), torch.from_numpy(y_test).long())
-        test_loader = DataLoader(dataset=file_nameset, batch_size=5000)
-        
-        # Device setup
+        df_map = pd.read_csv(code_to_name_path)
+        # 确保列名为 'code' 和 'name'（与训练输出一致）
+        if 'code' not in df_map.columns or 'name' not in df_map.columns:
+            print(f"Warning: {code_to_name_path} must contain 'code' and 'name' columns. Skipping.")
+            continue
+        code_to_name = dict(zip(df_map['code'], df_map['name']))
+        num_classes = len(code_to_name)
+
+        # 2. 动态调整 topn
+        current_topn = min(topn, num_classes)
+
+        # 3. 模型权重文件路径
+        model_weights_path = os.path.join(model_path, f'{category}_model_weights.pkl')
+        if not os.path.exists(model_weights_path):
+            print(f"Warning: Model weights {model_weights_path} not found. Skipping category {category}.")
+            continue
+
+        # 4. 准备 DataLoader
+        dataset = ClassifierDataset(torch.from_numpy(X_test).float(), torch.from_numpy(y_test).long())
+        test_loader = DataLoader(dataset=dataset, batch_size=5000)
+
+        # 5. 设备与模型加载
         device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-        
-        # Model setup
         model = MulticlassClassification(num_feature=NUM_FEATURES, num_class=num_classes)
-        model.load_state_dict(torch.load(f'{model_path}/{model_weights}', map_location=device))
+        state_dict = torch.load(model_weights_path, map_location=device)
+        model.load_state_dict(state_dict)
         model.to(device)
-        
-        # Prediction
+        model.eval()
+
+        # 6. 预测
         y_pred_list = []
         y_pred_proba = []
         with torch.no_grad():
-            model.eval()
             for X_batch, _ in test_loader:
                 X_batch = X_batch.to(device)
-                y_test_pred = model(X_batch)
-                _, y_pred_tags = torch.max(y_test_pred, dim=1)
-                y_pred_list.append(y_pred_tags.cpu().numpy())
-                y_pred_proba.append(y_test_pred.cpu().numpy())
-        
+                outputs = model(X_batch)
+                _, pred_tags = torch.max(outputs, dim=1)
+                y_pred_list.append(pred_tags.cpu().numpy())
+                y_pred_proba.append(outputs.cpu().numpy())
+
         y_pred_list = np.concatenate(y_pred_list, axis=0)
-        y_pred_list = [a.squeeze().tolist() for a in y_pred_list]
         y_pred_proba = np.concatenate(y_pred_proba, axis=0)
-        
-        # Load original data for seq names
-        original_df = pd.read_csv(f'{data_path}/Cate/{file_name}.csv')
-        id_to_name = dict(zip(original_df['Seq ID'], original_df['Seq Name']))
-        
-        y_pred_proba = softmax(y_pred_proba, axis=1)  
+        y_pred_proba = softmax(y_pred_proba, axis=1)
+
+        # 7. 加载序列 ID 映射（从原 Cate 目录下的 CSV 获取）
+        original_csv = os.path.join(data_path, 'Cate', f'{file_name}.csv')
+        if not os.path.exists(original_csv):
+            print(f"Error: {original_csv} not found. Cannot map sequence IDs.")
+            continue
+        df_orig = pd.read_csv(original_csv)
+        id_to_name = dict(zip(df_orig['Seq ID'], df_orig['Seq Name']))
+
+        # 8. 生成结果记录
         valid_records = []
-        a = np.array(list(code_to_name.keys()))
-        
         for i in range(len(y_pred_list)):
-            seq_name = id_to_name.get(i+1, 'unknown')
+            seq_id_num = i + 1
+            seq_name = id_to_name.get(seq_id_num, 'unknown')
             if seq_name == 'unknown':
                 continue
-            
-            topn_indices = np.argsort(y_pred_proba[i])[-topn:][::-1]
-            topn_preds = [code_to_name.get(a[idx], 'unknown') for idx in topn_indices]
+
+            topn_indices = np.argsort(y_pred_proba[i])[-current_topn:][::-1]
+            topn_preds = [code_to_name.get(idx, 'unknown') for idx in topn_indices]
             topn_probas = y_pred_proba[i][topn_indices]
-            
-            top1_pred = topn_preds[0]
-            top1_proba = topn_probas[0]
-            
+
+            # 根据 probability 阈值决定 top1 预测
+            if topn_probas[0] < probability:
+                top1_pred = "UnARG"
+                top1_proba = topn_probas[0]  # 仍保留原始概率，或可设为0？根据需求可调
+                # 如果需要将低于阈值的所有 topn 都标记为 UnARG，可在此处理
+            else:
+                top1_pred = topn_preds[0]
+                top1_proba = topn_probas[0]
+
             record = {
                 "seq_id": seq_name,
                 "pred": top1_pred,
                 "max_proba": top1_proba
             }
-            for j in range(topn):
+            for j in range(current_topn):
+                # 如果置信度低于阈值且当前是 top1，并且你希望 top1 显示 UnARG，则前几行已处理
+                # 这里保持 topn_preds 和 topn_probas 不变（或者也可统一过滤）
                 record[f"pred_{j+1}"] = topn_preds[j]
                 record[f"proba_{j+1}"] = topn_probas[j]
+
             valid_records.append(record)
-        pd.set_option('display.float_format', '{:.3f}'.format)
-        valid_results_df = pd.DataFrame(valid_records).round({ 
-            'max_proba': 3, 
-            **{f'proba_{j+1}': 3 for j in range(topn)} 
-        })
-        
-        valid_results_df.to_csv(plm_arg_output_file, index=False)
+
+        # 保存结果，路径使用 os.path.abspath 美化
+        output_file = os.path.join(data_path, '..', f'{file_name}_{category}_predicted_results.csv')
+        pd.DataFrame(valid_records).round({
+            'max_proba': 3,
+            **{f'proba_{j+1}': 3 for j in range(current_topn)}
+        }).to_csv(output_file, index=False)
+        output_file = os.path.abspath(output_file)
+        print(f"Saved predictions to {output_file}")
 
 def predict_all_categories(results_folder, file_name, probability=0.5):
     print("Generating results for Comprehensive results")
@@ -227,9 +242,18 @@ def predict_all_categories(results_folder, file_name, probability=0.5):
     comprehensive_output_file = f'{results_folder}/../{file_name}_Comprehensive_predicted_results.csv'
     filtered.to_csv(comprehensive_output_file, index=False)
     
-def predict(results_folder, file_name, num_gpus, model_path,topn,probability):
+def predict(results_folder, file_name, num_gpus, model_path, topn, probability, categories=None):
     type = 'plmglm'
     os.environ["CUDA_VISIBLE_DEVICES"] = str(num_gpus)
-    X_test,y_test=save_data(results_folder, type, file_name)
-    train(results_folder, type, file_name, model_path,X_test,y_test,topn)
-    predict_all_categories(results_folder, file_name,probability)
+    X_test, y_test = save_data(results_folder, type, file_name)
+    
+    # 默认内置类别（与原始一致）
+    if categories is None:
+        categories = ['GeneFamily', 'Resistance', 'Mechanism']
+    
+    # 调用修改后的预测函数（原 train 函数）
+    predict_categories(results_folder, type, file_name, model_path, X_test, y_test, topn, categories,probability)
+    
+    # 仅当预测了所有三个默认类别时才生成综合结果
+    if set(categories) == {'GeneFamily', 'Resistance', 'Mechanism'}:
+        predict_all_categories(results_folder, file_name, probability)

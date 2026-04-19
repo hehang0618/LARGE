@@ -14,6 +14,7 @@ from large.plm_embed_esm1b_LARGE import run_esm_embedding
 from large.batch_data_LARGE import batch_data
 from large.glm_embed import glm_embed
 from large.LARGE_predict import *
+from large.training import run_training   # 新增：训练模式入口
 
 
 def parse_arguments():
@@ -22,7 +23,7 @@ def parse_arguments():
     default_model_dir = script_dir + "/model/"
     
     parser = argparse.ArgumentParser(description="Process sequences and run LARGE prediction.")
-    group = parser.add_mutually_exclusive_group(required=True)
+    group = parser.add_mutually_exclusive_group(required=False)  # 改为 False，training 模式单独处理
     group.add_argument("-p", "--protein", metavar="filename", help="Input protein sequence file in FASTA format")
     group.add_argument("-n", "--nucleotide", metavar="filename", help="Input nucleotide sequence file in FASTA format (will be translated to protein)")
     parser.add_argument("-c", "--cpu", type=int, default=10, help="Number of cpus for sequence loading (default: %(default)s)")
@@ -33,11 +34,23 @@ def parse_arguments():
     parser.add_argument("-m", "--model_dir", default=default_model_dir, help="Downloaded models dir. If you don't set the download path manually, Don't set it.(default: %(default)s)")
     parser.add_argument("--probability", default=0.5, help="Set the cutoff probability(default: %(default)s)")
     parser.add_argument("--clean", action="store_true", help="If delete the intermediate file")
-    parser.add_argument("--cate", help="Training model")
     parser.add_argument("--model", default="fast" ,help="Fast or slow model. If choose slow, each sequence will get it's embs alone but will expend more time")    
+    parser.add_argument("--categories", nargs='+', default=None,
+                    help="Specify which categories to predict (e.g., resistance genefamily). "
+                         "If not provided, defaults to ['GeneFamily', 'Resistance', 'Mechanism']. "
+                         "Model weights and mapping files must exist in -m/--model_dir as '{category}_model_weights.pkl' and '{category}_code_to_name.csv'.")
+    # ==================== 新增训练参数 ====================
+    parser.add_argument("--training", action="store_true", help="Enable training mode")
+    parser.add_argument("-tp", "--training_protein", metavar="filename", help="Training protein FASTA file (required with --training)")
+    parser.add_argument("-tn", "--training_labels", metavar="filename", help="Training labels CSV: first column=seqname, second column=seqlabel (required with --training)")
+    parser.add_argument("-tc", "--training_category", metavar="category", help="Training category: genefamily / resistance / mechanism (required with --training)")
+    
+    # =====================================================
+    
     args = parser.parse_args()
     return args
-    
+
+
 def mark_step_finished(step_num, output_dir):
     finish_file = os.path.join(output_dir, f"finish_step{step_num}")
     open(finish_file, "w").close()
@@ -59,9 +72,43 @@ def translate_nucleotide_to_protein(input_file, outfaa):
                 out_handle.write(f"{pred.translate()}\n")
     return outfaa
 
+
 def main():
     args = parse_arguments()
+    
+    # ==================== 训练模式处理 ====================
+    if args.training:
+        # 默认输出目录改为 ./model/（如果用户未手动指定 -o）
+        if args.output_dir == "./output/":
+            args.output_dir = "./model/"
+        create_directory_if_not_exists(args.output_dir)
+        
+        # 参数校验
+        if not args.training_protein or not args.training_labels or not args.training_category:
+            print("Error: --training requires -tp, -tn and -tc parameters.")
+            sys.exit(1)
+        if args.protein or args.nucleotide:
+            print("Error: -p/-n cannot be used together with --training.")
+            sys.exit(1)
+        
+        # 执行训练
+        run_training(args)
+        
+        # --clean 支持
+        if args.clean:
+            tempdir = os.path.join(args.output_dir, "temp/")
+            if os.path.exists(tempdir):
+                shutil.rmtree(tempdir, ignore_errors=True)
+        print("Training finished successfully.")
+        return
+    # =====================================================
+    
+    # ==================== 原有预测模式（完全不变） ====================
     create_directory_if_not_exists(args.output_dir)
+    
+    if not args.protein and not args.nucleotide:
+        print("Error: Either -p/--protein or -n/--nucleotide is required for prediction mode.")
+        sys.exit(1)
     
     tempdir = os.path.join(args.output_dir, "temp/")
     os.makedirs(tempdir, exist_ok=True)
@@ -135,7 +182,8 @@ def main():
     print("Step 3: Generating final results...")
     try:
         predict(results_folder=tempdir, file_name=input_file_name, num_gpus=args.gpu, 
-        model_path=args.model_dir, topn=args.topn,probability=args.probability)
+        model_path=args.model_dir, topn=args.topn, probability=args.probability,
+        categories=args.categories)
     except subprocess.CalledProcessError as e:
         print(f"Error occurred in Step 3: {e}")
     if args.clean:
