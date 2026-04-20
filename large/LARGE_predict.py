@@ -193,9 +193,9 @@ def predict_categories(data_path, type, file_name, model_path, X_test, y_test, t
 
 def predict_all_categories(results_folder, file_name, probability=0.5):
     print("Generating results for Comprehensive results")
-    resistance_results = pd.read_csv(f'{results_folder}/../{file_name}_Resistance_predicted_results.csv')
-    genefamily_results = pd.read_csv(f'{results_folder}/../{file_name}_GeneFamily_predicted_results.csv')
-    mechanism_results = pd.read_csv(f'{results_folder}/../{file_name}_Mechanism_predicted_results.csv')
+    resistance_results = pd.read_csv(f'{results_folder}/../{file_name}_resistance_predicted_results.csv')
+    genefamily_results = pd.read_csv(f'{results_folder}/../{file_name}_genefamily_predicted_results.csv')
+    mechanism_results = pd.read_csv(f'{results_folder}/../{file_name}_mechanism_predicted_results.csv')
     
     resistance_results = resistance_results.rename(
         columns={'pred': 'resistance', 'max_proba': 'resistance_prob'}
@@ -239,7 +239,7 @@ def predict_all_categories(results_folder, file_name, probability=0.5):
     filtered['mechanism'] = filtered['mechanism'].fillna('Unknown')
     filtered['mechanism_prob'] = filtered['mechanism_prob'].fillna(0)
     
-    comprehensive_output_file = f'{results_folder}/../{file_name}_Comprehensive_predicted_results.csv'
+    comprehensive_output_file = f'{results_folder}/../{file_name}_comprehensive_predicted_results.csv'
     filtered.to_csv(comprehensive_output_file, index=False)
     
 def predict(results_folder, file_name, num_gpus, model_path, topn, probability, categories=None):
@@ -249,11 +249,11 @@ def predict(results_folder, file_name, num_gpus, model_path, topn, probability, 
     
     # 默认内置类别（与原始一致）
     if categories is None:
-        categories = ['GeneFamily', 'Resistance', 'Mechanism']
+        categories = ['genefamily', 'resistance', 'mechanism']
     
     # 调用修改后的预测函数（原 train 函数）
     predict_categories(results_folder, type, file_name, model_path, X_test, y_test, topn, categories,probability)
     
     # 仅当预测了所有三个默认类别时才生成综合结果
-    if set(categories) == {'GeneFamily', 'Resistance', 'Mechanism'}:
+    if set(categories) == {'genefamily', 'resistance', 'mechanism'}:
         predict_all_categories(results_folder, file_name, probability)
