@@ -1,6 +1,7 @@
-# **LARGE**
+# **LARGE(v 1.0.0)**
 
 A large language model based tool for antibiotic resistance gene identify and estimates.
+
 
 ## **Getting Started**
 
