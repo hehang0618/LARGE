@@ -58,7 +58,8 @@ You must have the **`GPUs`** to install and use this software. We recommend that
 5. Model Download
 
    Our models are uploaded to Hugging Face at [https://huggingface.co/westlakehang/large](https://huggingface.co/westlakehang/large). You can either:
-   - Download all files from the website and place them in the **`model`** folder in the conda envs folder(etc. ~/miniconda3/envs/large/lib/python3.10/site-packages/large_v1/model/).
+   - Download all files from the website and place them in the **`model`** folder in the conda envs folder(etc. ~/miniconda3/envs/large/lib/python3.10/site-packages/large/model/).
+   - Download the models.tar form the https://large.lab.westlake.edu.cn/download/database/models.tar and decompression it into the **`model`** folder.
    - Run the **`modeldownload.py`** script to automatically download the models.
 
 ## **Usage**
