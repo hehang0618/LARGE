@@ -1,22 +1,9 @@
 #!/usr/bin/env python3
 import os
-import subprocess
 import sys
 import argparse
 import shutil
-import pyrodigal
-import Bio.SeqIO
-import importlib.util
 import large
-
-from large.readfasta import process_fasta
-from large.plm_embed_esm1b_LARGE import run_esm_embedding
-from large.batch_data_LARGE import batch_data
-from large.glm_embed import glm_embed
-from large.LARGE_predict import *
-from large.training import run_training   # 新增：训练模式入口
-
-
 def parse_arguments():
     script_dir = list(large.__path__)[0]
     default_output = "./output/"
@@ -74,16 +61,26 @@ def translate_nucleotide_to_protein(input_file, outfaa):
 
 
 def main():
+    import subprocess
+    import pyrodigal
+    import Bio.SeqIO
+    import importlib.util
+    
+
+    from large.readfasta import process_fasta
+    from large.plm_embed_esm1b_LARGE import run_esm_embedding
+    from large.batch_data_LARGE import batch_data
+    from large.glm_embed import glm_embed
+    from large.LARGE_predict import predict
+    from large.training import run_training
+    
     args = parse_arguments()
     
-    # ==================== 训练模式处理 ====================
     if args.training:
-        # 默认输出目录改为 ./model/（如果用户未手动指定 -o）
         if args.output_dir == "./output/":
             args.output_dir = "./model/"
         create_directory_if_not_exists(args.output_dir)
         
-        # 参数校验
         if not args.training_protein or not args.training_labels or not args.training_category:
             print("Error: --training requires -tp, -tn and -tc parameters.")
             sys.exit(1)
@@ -91,10 +88,7 @@ def main():
             print("Error: -p/-n cannot be used together with --training.")
             sys.exit(1)
         
-        # 执行训练
         run_training(args)
-        
-        # --clean 支持
         if args.clean:
             tempdir = os.path.join(args.output_dir, "temp/")
             if os.path.exists(tempdir):
@@ -103,7 +97,6 @@ def main():
         return
     # =====================================================
     
-    # ==================== 原有预测模式（完全不变） ====================
     create_directory_if_not_exists(args.output_dir)
     
     if not args.protein and not args.nucleotide:
